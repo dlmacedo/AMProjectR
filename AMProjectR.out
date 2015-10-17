@@ -1,0 +1,49 @@
+
+> data <- read.csv("https://archive.ics.uci.edu/ml/machine-learning-databases/tic-tac-toe/tic-tac-toe.data", header=FALSE)
+
+> head(data, 10)
+   V1 V2 V3 V4 V5 V6 V7 V8 V9      V10
+1   x  x  x  x  o  o  x  o  o positive
+2   x  x  x  x  o  o  o  x  o positive
+3   x  x  x  x  o  o  o  o  x positive
+4   x  x  x  x  o  o  o  b  b positive
+5   x  x  x  x  o  o  b  o  b positive
+6   x  x  x  x  o  o  b  b  o positive
+7   x  x  x  x  o  b  o  o  b positive
+8   x  x  x  x  o  b  o  b  o positive
+9   x  x  x  x  o  b  b  o  o positive
+10  x  x  x  x  b  o  o  o  b positive
+
+> tail(data, 10)
+    V1 V2 V3 V4 V5 V6 V7 V8 V9      V10
+949  x  o  x  o  x  x  o  x  o negative
+950  x  o  x  o  o  x  x  x  o negative
+951  x  o  o  o  x  x  x  x  o negative
+952  o  x  x  x  x  o  o  o  x negative
+953  o  x  x  x  o  o  x  o  x negative
+954  o  x  x  x  o  o  o  x  x negative
+955  o  x  o  x  x  o  x  o  x negative
+956  o  x  o  x  o  x  x  o  x negative
+957  o  x  o  o  x  x  x  o  x negative
+958  o  o  x  x  x  o  o  x  x negative
+
+> str(data)
+'data.frame':	958 obs. of  10 variables:
+ $ V1 : Factor w/ 3 levels "b","o","x": 3 3 3 3 3 3 3 3 3 3 ...
+ $ V2 : Factor w/ 3 levels "b","o","x": 3 3 3 3 3 3 3 3 3 3 ...
+ $ V3 : Factor w/ 3 levels "b","o","x": 3 3 3 3 3 3 3 3 3 3 ...
+ $ V4 : Factor w/ 3 levels "b","o","x": 3 3 3 3 3 3 3 3 3 3 ...
+ $ V5 : Factor w/ 3 levels "b","o","x": 2 2 2 2 2 2 2 2 2 1 ...
+ $ V6 : Factor w/ 3 levels "b","o","x": 2 2 2 2 2 2 1 1 1 2 ...
+ $ V7 : Factor w/ 3 levels "b","o","x": 3 2 2 2 1 1 2 2 1 2 ...
+ $ V8 : Factor w/ 3 levels "b","o","x": 2 3 2 1 2 1 2 1 2 2 ...
+ $ V9 : Factor w/ 3 levels "b","o","x": 2 2 3 1 1 2 1 2 2 1 ...
+ $ V10: Factor w/ 2 levels "negative","positive": 2 2 2 2 2 2 2 2 2 2 ...
+
+> summary(data)
+ V1      V2      V3      V4      V5      V6      V7      V8      V9            V10     
+ b:205   b:250   b:205   b:250   b:160   b:250   b:205   b:250   b:205   negative:332  
+ o:335   o:330   o:335   o:330   o:340   o:330   o:335   o:330   o:335   positive:626  
+ x:418   x:378   x:418   x:378   x:458   x:378   x:418   x:378   x:418                 
+
+> sink()

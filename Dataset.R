@@ -1,5 +1,8 @@
+## sink("AMProjectR.out")
 data <- read.csv("https://archive.ics.uci.edu/ml/machine-learning-databases/tic-tac-toe/tic-tac-toe.data", header=FALSE)
 head(data, 10)
 tail(data, 10)
 str(data)
 summary(data)
+source("Friedman.R", echo = TRUE)
+## sink()

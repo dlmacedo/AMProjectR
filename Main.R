@@ -9,6 +9,7 @@ summary(data)
 data[data$V10=="positive",]
 data[data$V10=="negative",]
 folds <- createFolds(data$V10)
+folds
 str(folds)
 folds$Fold01
 data[folds$Fold01,]

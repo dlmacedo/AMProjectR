@@ -18,5 +18,5 @@ data[folds$Fold01,]
 data[-folds$Fold01,]
 data[folds[[1]],]
 data[-folds[[1]],]
-source("Friedman.R", echo = TRUE)
+source("FriedmanNemenyi.R", echo = TRUE)
 ## sink()

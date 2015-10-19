@@ -11,6 +11,7 @@ folds <- createFolds(data$V10)
 training <- data[-folds[[1]],]
 test <- data[folds[[1]],]
 # train a naive bayes model
+# Dummy variables is doing automatcly in R...
 ctrl <- trainControl(method="none")
 model <- train(V10 ~ ., data=training, method="nnet", tuneGrid=data.frame(size=3, decay=0.01), trControl=ctrl)
 # make predictions

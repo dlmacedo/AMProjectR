@@ -10,5 +10,8 @@ y <- matrix(c(3.88, 5.64, 5.76, 4.25, 5.91, 4.33, 30.58, 30.14, 16.92, 23.19, 26
 print(y)
 friedman.test(y)
 posthoc.friedman.nemenyi.test(y)
+pdf("mygraph.pdf")
+boxplot(y)
+dev.off()
 boxplot(y)
 detach("package:PMCMR", unload=TRUE)

@@ -16,3 +16,4 @@ model <- NaiveBayes(V10~., data=training)
 predictions <- predict(model, test[,1:9])
 # summarize results
 confusionMatrix(predictions$class, test$V10)
+

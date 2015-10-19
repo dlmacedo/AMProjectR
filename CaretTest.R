@@ -5,12 +5,13 @@ library(klaR)
 library(MASS)
 library(e1071)
 # load the iris dataset
-data(iris)
+tictactoe <- read.csv("https://archive.ics.uci.edu/ml/machine-learning-databases/tic-tac-toe/tic-tac-toe.data", header=FALSE)
 # define training control
-train_control <- trainControl(method="repeatedcv", number=10, repeats=3)
+#train_control <- trainControl(method="none")
 # train the model 
-model <- train(Species~., data=iris, trControl=train_control, method="nb")
+#model <- train(V10 ~ ., data=tictactoe, method="nb")
+model <- train(V10 ~ ., data=tictactoe, method="nnet", tuneGrid=data.frame(size=3, decay=0.01), trControl=trainControl(method="none"))
 # make predictions
-predictions <- predict(model, iris[,1:4])
+predictions <- predict(model, tictactoe[,1:9])
 # summarize results
-confusionMatrix(predictions, iris$Species)
+confusionMatrix(predictions, tictactoe$V10)

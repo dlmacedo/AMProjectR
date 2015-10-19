@@ -1,4 +1,6 @@
 # load the libraries
+today <- Sys.Date()
+format(today, format="%B %d %Y")
 library(caret)
 library(klaR)
 # load the iris dataset
@@ -15,5 +17,6 @@ model <- NaiveBayes(V10~., data=training)
 # make predictions
 predictions <- predict(model, test[,1:9])
 # summarize results
-confusionMatrix(predictions$class, test$V10)
-
+finalResults <- confusionMatrix(predictions$class, test$V10)
+print(finalResults)
+finalResults$overall["Accuracy"]

@@ -18,4 +18,6 @@ model <- train(V10 ~ ., data=training, method="nnet", tuneGrid=data.frame(size=3
 model
 predictions <- predict(model, test[,1:9])
 # summarize results
-confusionMatrix(predictions, test$V10)
+finalResults <- confusionMatrix(predictions, test$V10)
+print(finalResults)
+finalResults$overall["Accuracy"]

@@ -1,4 +1,6 @@
 # load the libraries
+today <- Sys.Date()
+format(today, format="%B %d %Y")
 library(caret)
 library(klaR)
 # load the iris dataset
@@ -11,13 +13,10 @@ folds <- createFolds(data$V10)
 training <- data[-folds[[1]],]
 test <- data[folds[[1]],]
 # train a naive bayes model
-# Dummy variables is doing automatcly in R...
-nnetCtrl <- trainControl(method="none")
-nnetModel <- train(V10 ~ ., data=training, method="nnet", tuneGrid=data.frame(size=3, decay=0.01), trControl=nnetCtrl)
+model <- NaiveBayes(V10~., data=training)
 # make predictions
-nnetModel
-nnetPredictions <- predict(nnetModel, test[,1:9])
+predictions <- predict(model, test[,1:9])
 # summarize results
-nnetResults <- confusionMatrix(nnetPredictions, test$V10)
-print(nnetResults)
-nnetResults$overall["Accuracy"]
+finalResults <- confusionMatrix(predictions$class, test$V10)
+print(finalResults)
+finalResults$overall["Accuracy"]

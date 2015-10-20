@@ -2,37 +2,76 @@
 # Install.packages("caret", dependencies = c("Depends", "Suggests"))
 # Load libraries
 library(caret)
-library(klaR)
+library(PMCMR)
+#library(klaR)
+
 # Load source files
+source("NaiveBayes.R", echo = TRUE)
+source("kNN.R", echo = TRUE)
+source("Combined.R", echo = TRUE)
+source("NeuralNetwork.R", echo = TRUE)
+source("SVM.R", echo = TRUE)
 # source("FriedmanNemenyi.R", echo = TRUE)
+
 # Define output sink
 # sink("AMProjectR.out")
+
 # Define and show data and time
 today <- Sys.Date()
 format(today, format="%B %d %Y")
+
 # Load tic-tac-toe dataset and do some basic verifications
 data <- read.csv("https://archive.ics.uci.edu/ml/machine-learning-databases/tic-tac-toe/tic-tac-toe.data", header=FALSE)
 head(data, 10)
 tail(data, 10)
 str(data)
 summary(data)
-#data[data$V10=="positive",]
-#data[data$V10=="negative",]
-# Create structured partition (folds) based on desired class and do some basic verifications
-folds <- createFolds(data$V10)
-print(folds)
-str(folds)
-# Define the training sample excluding fold i
-training <- data[-folds[[1]],]
-nrow(training)
-# Define the test sample using only fold i
-test <- data[folds[[1]],]
-nrow(test)
 
-#folds$Fold01
-#data[folds$Fold01,]
-#data[-folds$Fold01,]
+globalResults <- matrix(nrow=9, ncol=5)
+colnames(globalResults) <- c("NB","KNN","COMB","MLP","SVM")
+
+# Create a loop to produce 10 partitions
+for(i in 1:3){
+
+  # Create stratified 10 folds partition (default) based on desired class and do some basic verifications
+  # The caret library documentation says that this is a stratified partition and this is why the fuction asks for a input class
+  folds <- createFolds(data$V10)
+  print(folds)
+  str(folds)
+  # The code below demonstrates that in fact we have a stratified partition
+  summary(data[folds[[1]],])
+
+  # Create a loop to create a training and test set
+  for(j in 1:3){
+
+    # Define the training sample excluding fold j
+    training <- data[-folds[[j]],]
+    nrow(training)
+    # Define the test sample using only fold j
+    test <- data[folds[[j]],]
+    nrow(test)
+
+    # Training and testing the classifiers for the current partition and fold selection
+    globalResults[3*(i-1)+j,1] <- nbFunction()
+    globalResults[3*(i-1)+j,2] <- knnFunction()
+    globalResults[3*(i-1)+j,3] <- combinedFunction()
+    globalResults[3*(i-1)+j,4] <- nnetFunction()
+    globalResults[3*(i-1)+j,5] <- svmFunction()
+
+  }
+
+}
+
+print(globalResults)
+boxplot(globalResults)
+#pdf("mygraph.pdf")
+boxplot(globalResults)
+#dev.off()
+write.table(globalResults, "mydata.txt", sep="\t")
+
 # Execute Friedman and Nemenyi tests 
-source("FriedmanNemenyi.R", echo = TRUE)
+friedman.test(globalResults)
+posthoc.friedman.nemenyi.test(globalResults)
+
 # Stop output sink
 # sink()

@@ -13,16 +13,16 @@ test <- data[folds[[1]],]
 nrow(test)
 
 # Define the train control to train just one model with full resampling in each epoch
-nbCtrl <- trainControl(method="none")
-# Train the naive bayes model
-nbModel <- train(V10 ~ ., data=training, method="nb", tuneGrid=data.frame(fL=0, usekernel=FALSE), trControl=nbCtrl)
-print(nbModel)
+svmCtrl <- trainControl(method="none")
+# Train the SVM model. Dummy variables is doing automatcly in R
+svmModel <- train(V10 ~ ., data=training, method="svmRadial", tuneGrid=data.frame(sigma=0.1, C=1), trControl=svmCtrl)
+print(svmModel)
 # Make predictions using the trained model
-nbPredictions <- predict(nbModel, test[,1:9])
-print(nbPredictions)
+svmPredictions <- predict(svmModel, test[,1:9])
+print(svmPredictions)
 # Summarize results
-nbResults <- confusionMatrix(nbPredictions, test$V10)
-print(nbResults)
+svmResults <- confusionMatrix(svmPredictions, test$V10)
+print(svmResults)
 # Return accuracy
-accuracy <- nbResults$overall["Accuracy"]
+accuracy <- svmResults$overall["Accuracy"]
 print(accuracy)

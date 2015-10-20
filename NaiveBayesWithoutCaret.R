@@ -1,6 +1,4 @@
 # load the libraries
-today <- Sys.Date()
-format(today, format="%B %d %Y")
 library(caret)
 library(klaR)
 # load the iris dataset

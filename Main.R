@@ -2,12 +2,13 @@
 # Install.packages("caret", dependencies = c("Depends", "Suggests"))
 # Load libraries
 library(caret)
+library(FastKNN)
 library(PMCMR)
 #library(klaR)
 
 # Load source files
 source("NaiveBayes.R", echo = TRUE)
-source("kNN.R", echo = TRUE)
+source("KNN1.R", echo = TRUE)
 source("Combined.R", echo = TRUE)
 source("NeuralNetwork.R", echo = TRUE)
 source("SVM.R", echo = TRUE)
@@ -28,7 +29,7 @@ str(data)
 summary(data)
 
 globalResults <- matrix(nrow=9, ncol=5)
-colnames(globalResults) <- c("NB","KNN","COMB","MLP","SVM")
+colnames(globalResults) <- c("NB","KNN1","COMB","MLP","SVM")
 
 # Create a loop to produce 10 partitions
 for(i in 1:3){
@@ -53,7 +54,7 @@ for(i in 1:3){
 
     # Training and testing the classifiers for the current partition and fold selection
     globalResults[3*(i-1)+j,1] <- nbFunction()
-    globalResults[3*(i-1)+j,2] <- knnFunction()
+    globalResults[3*(i-1)+j,2] <- knn1Function()
     globalResults[3*(i-1)+j,3] <- combinedFunction()
     globalResults[3*(i-1)+j,4] <- nnetFunction()
     globalResults[3*(i-1)+j,5] <- svmFunction()

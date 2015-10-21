@@ -1,7 +1,7 @@
-knnFunction <- function(){
+knn1Function <- function(){
   # Define the train control to train just one model with full resampling in each epoch
   knnCtrl <- trainControl(method="none")
-  # Train the kNN model. The hamming 
+  # Train the kNN model. Dummy variables is doing automatcly in CARET. This is doing this great performance???
   knnModel <- train(V10 ~ ., data=training, method="knn", tuneGrid=data.frame(k=5), trControl=knnCtrl)
   print(knnModel)
   # Make predictions using the trained model
@@ -12,7 +12,7 @@ knnFunction <- function(){
   print(knnResults)
   # Return accuracy
   accuracy <- knnResults$overall["Accuracy"]
-  print("kNN")
+  print("kNN1")
   print(accuracy)
   return(accuracy)
 }

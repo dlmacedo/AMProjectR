@@ -68,7 +68,7 @@ boxplot(globalResults)
 #pdf("mygraph.pdf")
 boxplot(globalResults)
 #dev.off()
-write.table(globalResults, "mydata.txt", sep="\t")
+write.table(globalResults, "globalResults.txt", sep="\t")
 
 # Execute Friedman and Nemenyi tests 
 friedman.test(globalResults)

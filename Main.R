@@ -10,9 +10,13 @@ library(PMCMR)
 library(e1071)
 # library(klaR)
 
+# creating a matrix of global accuracy results
+globalResults <- matrix(nrow=12, ncol=6)
+colnames(globalResults) <- c("NB","KNN[5]","KNN[7]","COMB","MLP","SVM")
+
 # Load source files
 source("NaiveBayes.R", echo = TRUE)
-# source("KNN1.R", echo = TRUE)
+source("ConfidenceIntervals.R", echo = TRUE)
 source("KNN.R", echo = TRUE)
 source("Combined.R", echo = TRUE)
 source("NeuralNetwork.R", echo = TRUE)
@@ -33,10 +37,6 @@ summary(data)
 
 # creating dissimilarity matrix
 dissMatrix <- hamming.distance(as.matrix(data[,-10]))
-
-# creating a matrix of global accuracy results
-globalResults <- matrix(nrow=12, ncol=6)
-colnames(globalResults) <- c("NB","KNN[3]","KNN[7]","COMB","MLP","SVM")
 
 # Create a loop to produce 10 partitions
 for(i in 1:4){
@@ -60,7 +60,7 @@ for(i in 1:4){
 
     # Training and testing the classifiers for the current partition and fold selection
     globalResults[3*(i-1)+j,1] <- nbFunction()
-    globalResults[3*(i-1)+j,2] <- knnFunction(3)
+    globalResults[3*(i-1)+j,2] <- knnFunction(5)
     globalResults[3*(i-1)+j,3] <- knnFunction(7)
     globalResults[3*(i-1)+j,4] <- combinedFunction()
     globalResults[3*(i-1)+j,5] <- nnetFunction()
@@ -75,9 +75,18 @@ for(i in 1:4){
 
 print(globalResults)
 #pdf("GlobalResults.pdf")
-boxplot(globalResults)
+boxplot(globalResults, main="BLOXPLOT FOR CLASSIFIERS")
 #dev.off()
 write.table(globalResults, "GlobalResults.txt", sep="\t")
+
+confidence <- confidenceInterval()
+print(confidence)
+#pdf("Confidence.pdf")
+interval <- confidence[1,]
+plotCI(1:6,interval,confidence[2,],confidence[2,],lwd=2,col="red",scol="blue")
+#plot(confidence)
+#dev.off()
+write.table(confidence, "Confidence.txt", sep="\t")
 
 # Execute Friedman and Nemenyi tests 
 friedman.test(globalResults)

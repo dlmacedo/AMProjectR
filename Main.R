@@ -1,3 +1,6 @@
+# Define output sink
+sink("AMProjectR.out")
+
 # Install packages
 # Install.packages("caret", dependencies = c("Depends", "Suggests"))
 # Load libraries
@@ -13,9 +16,6 @@ source("Combined.R", echo = TRUE)
 source("NeuralNetwork.R", echo = TRUE)
 source("SVM.R", echo = TRUE)
 # source("FriedmanNemenyi.R", echo = TRUE)
-
-# Define output sink
-# sink("AMProjectR.out")
 
 # Define and show data and time
 today <- Sys.Date()
@@ -75,4 +75,4 @@ friedman.test(globalResults)
 posthoc.friedman.nemenyi.test(globalResults)
 
 # Stop output sink
-# sink()
+sink()

@@ -74,8 +74,7 @@ for(i in 1:4){
 }
 
 print(globalResults)
-#boxplot(globalResults)
-#pdf("mygraph.pdf")
+#pdf("GlobalResults.pdf")
 boxplot(globalResults)
 #dev.off()
 write.table(globalResults, "GlobalResults.txt", sep="\t")

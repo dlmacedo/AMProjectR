@@ -1,4 +1,3 @@
-dissMatrix <- hamming.distance(as.matrix(data[,-10]))
 Distance_for_KNN_test <- function(test,training){
   value <- matrix(nrow=nrow(test), ncol=nrow(training))
   for(i in 1:nrow(value)){
@@ -16,7 +15,3 @@ Distance_for_KNN_test <- function(test,training){
   }  
   return(value)
 }
-# Distance Matrix
-distanceExample<-Distance_for_KNN_test(test[,-10], training[,-10])
-# Fast KNN do not create dummy var before trainning...
-knn_test_function(training[,-10], test[,-10], distanceExample, training[,10], k = 15)

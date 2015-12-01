@@ -1,5 +1,5 @@
 # Define output sink
-sink("AMProjectR.out")
+# sink("AMProjectR.out")
 
 # Install packages
 # Install.packages("caret", dependencies = c("Depends", "Suggests"))
@@ -7,11 +7,13 @@ sink("AMProjectR.out")
 library(caret)
 library(FastKNN)
 library(PMCMR)
-#library(klaR)
+library(e1071)
+# library(klaR)
 
 # Load source files
 source("NaiveBayes.R", echo = TRUE)
 source("KNN1.R", echo = TRUE)
+source("KNN2.R", echo = TRUE)
 source("Combined.R", echo = TRUE)
 source("NeuralNetwork.R", echo = TRUE)
 source("SVM.R", echo = TRUE)
@@ -23,19 +25,24 @@ format(today, format="%B %d %Y")
 
 # Load tic-tac-toe dataset and do some basic verifications
 data <- read.csv("https://archive.ics.uci.edu/ml/machine-learning-databases/tic-tac-toe/tic-tac-toe.data", header=FALSE)
+# Testing data
 head(data, 10)
 tail(data, 10)
 str(data)
 summary(data)
 
-globalResults <- matrix(nrow=9, ncol=5)
+# creating dissimilarity matrix
+dissMatrix <- hamming.distance(as.matrix(data[,-10]))
+
+# creating a matrix of global accuracy results
+globalResults <- matrix(nrow=12, ncol=5)
 colnames(globalResults) <- c("NB","KNN1","COMB","MLP","SVM")
 
 # Create a loop to produce 10 partitions
-for(i in 1:3){
-
+for(i in 1:4){
   # Create stratified 10 folds partition (default) based on desired class and do some basic verifications
-  # The caret library documentation says that this is a stratified partition and this is why the fuction asks for a input class
+  # The caret library documentation says that this is a stratified partition
+  # and this is why the fuction asks for a input class
   folds <- createFolds(data$V10)
   print(folds)
   str(folds)
@@ -44,7 +51,6 @@ for(i in 1:3){
 
   # Create a loop to create a training and test set
   for(j in 1:3){
-
     # Define the training sample excluding fold j
     training <- data[-folds[[j]],]
     nrow(training)
@@ -58,9 +64,13 @@ for(i in 1:3){
     globalResults[3*(i-1)+j,3] <- combinedFunction()
     globalResults[3*(i-1)+j,4] <- nnetFunction()
     globalResults[3*(i-1)+j,5] <- svmFunction()
-
+    
+    # Distance Matrix
+    ###distanceExample<-Distance_for_KNN_test(test[,-10], training[,-10])
+    # Fast KNN do not create dummy var before trainning...
+    ###knn_test_function(training[,-10], test[,-10], distanceExample, training[,10], k = 15)
+    
   }
-
 }
 
 print(globalResults)
@@ -75,4 +85,4 @@ friedman.test(globalResults)
 posthoc.friedman.nemenyi.test(globalResults)
 
 # Stop output sink
-sink()
+# sink()

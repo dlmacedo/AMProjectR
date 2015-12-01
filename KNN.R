@@ -15,3 +15,12 @@ Distance_for_KNN_test <- function(test,training){
   }  
   return(value)
 }
+knnFunction <- function(i){
+  # Distance Matrix
+  distance <- Distance_for_KNN_test(test[,-10], training[,-10])
+  # Fast KNN do not create dummy var before trainning
+  y <- knn_test_function(training[,-10], test[,-10], distance, training[,10], k = i)
+  g <- test[,10]==y[]
+  accuracy <- mean(g)
+  return(accuracy)
+}

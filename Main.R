@@ -8,11 +8,17 @@ library(caret)
 library(FastKNN)
 library(PMCMR)
 library(e1071)
-# library(klaR)
+library(kernlab)
+library(klaR)
+library(lattice)
+library(MASS)
+library(nnet)
+library(ggplot2)
+library(plotrix)
 
 # creating a matrix of global accuracy results
 globalResults <- matrix(nrow=100, ncol=6)
-colnames(globalResults) <- c("NB","KNN[5]","KNN[7]","COMB","MLP","SVM")
+colnames(globalResults) <- c("NB","KNN[5]","KNN[7]","COMB[3]","MLP","SVM")
 
 # Load source files
 source("NaiveBayes.R", echo = TRUE)
@@ -59,12 +65,12 @@ for(i in 1:10){
     nrow(test)
 
     # Training and testing the classifiers for the current partition and fold selection
-    globalResults[3*(i-1)+j,1] <- nbFunction()
-    globalResults[3*(i-1)+j,2] <- knnFunction(5)
-    globalResults[3*(i-1)+j,3] <- knnFunction(7)
-    globalResults[3*(i-1)+j,4] <- combinedFunction()
-    globalResults[3*(i-1)+j,5] <- nnetFunction()
-    globalResults[3*(i-1)+j,6] <- svmFunction()
+    globalResults[10*(i-1)+j,1] <- nbFunction()
+    #globalResults[10*(i-1)+j,2] <- knnFunction(5)
+    #globalResults[10*(i-1)+j,3] <- knnFunction(7)
+    globalResults[10*(i-1)+j,4] <- combinedFunction()
+    globalResults[10*(i-1)+j,5] <- nnetFunction()
+    globalResults[10*(i-1)+j,6] <- svmFunction()
     
     # Distance Matrix
     ###distanceExample<-Distance_for_KNN_test(test[,-10], training[,-10])
@@ -81,10 +87,9 @@ write.table(globalResults, "GlobalResults.txt", sep="\t")
 
 confidence <- confidenceInterval()
 print(confidence)
-#pdf("Confidence.pdf")
 interval <- confidence[1,]
+#pdf("Confidence.pdf")
 plotCI(1:6,interval,confidence[2,],confidence[2,],lwd=2,col="red",scol="blue")
-#plot(confidence)
 #dev.off()
 write.table(confidence, "Confidence.txt", sep="\t")
 

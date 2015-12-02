@@ -41,23 +41,6 @@ combinedFunction <- function(){
   print(g)
   accuracy <- mean(g)
   return(accuracy)
-  
-  #print("COMBINED")
-  
-  #### Incorporate knn1 with probabilities... And sum rule... Destroy knn1...
-  #### Incorporate knn1 with probabilities... And sum rule... Destroy knn1...
-  #### Incorporate knn1 with probabilities... And sum rule... Destroy knn1...
-  #### Incorporate knn1 with probabilities... And sum rule... Destroy knn1...
-  #### Incorporate knn1 with probabilities... And sum rule... Destroy knn1...
-  
-  #print(nbPredictions)
-  #return(0.9)
-  
-  # Summarize results
-  ### nbResults <- confusionMatrix(nbPredictions, test$V10)
-  ### print(nbResults)
-  # Return accuracy
-  ### accuracy <- nbResults$overall["Accuracy"]
   ### print(accuracy)
 }
 #combinedFunction()

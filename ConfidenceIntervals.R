@@ -2,7 +2,7 @@
 #x
 confidenceInterval <- function(){
 confInt <- matrix(nrow=2, ncol=6)
-colnames(confInt) <- c("NB","KNN[5]","KNN[7]","COMB","MLP","SVM")
+colnames(confInt) <- c("NB","KNN[5]","KNN[7]","COMB[3]","MLP","SVM")
 rownames(confInt) <- c("MEAN","STD")
 
 for(m in 1:6){

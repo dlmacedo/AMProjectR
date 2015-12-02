@@ -1,5 +1,5 @@
 # Define output sink
-sink("AMProjectR.out")
+sink("AMProjectR.txt")
 
 # Install packages
 # Install.packages("caret", dependencies = c("Depends", "Suggests"))
@@ -43,6 +43,7 @@ summary(data)
 
 # creating dissimilarity matrix
 dissMatrix <- hamming.distance(as.matrix(data[,-10]))
+print(dissMatrix)
 
 # Create a loop to produce 10 partitions
 for(i in 1:10){
@@ -66,8 +67,8 @@ for(i in 1:10){
 
     # Training and testing the classifiers for the current partition and fold selection
     globalResults[10*(i-1)+j,1] <- nbFunction()
-    #globalResults[10*(i-1)+j,2] <- knnFunction(5)
-    #globalResults[10*(i-1)+j,3] <- knnFunction(7)
+    globalResults[10*(i-1)+j,2] <- knnFunction(5)
+    globalResults[10*(i-1)+j,3] <- knnFunction(7)
     globalResults[10*(i-1)+j,4] <- combinedFunction()
     globalResults[10*(i-1)+j,5] <- nnetFunction()
     globalResults[10*(i-1)+j,6] <- svmFunction()

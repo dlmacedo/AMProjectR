@@ -11,7 +11,7 @@ library(e1071)
 # library(klaR)
 
 # creating a matrix of global accuracy results
-globalResults <- matrix(nrow=12, ncol=6)
+globalResults <- matrix(nrow=100, ncol=6)
 colnames(globalResults) <- c("NB","KNN[5]","KNN[7]","COMB","MLP","SVM")
 
 # Load source files
@@ -39,7 +39,7 @@ summary(data)
 dissMatrix <- hamming.distance(as.matrix(data[,-10]))
 
 # Create a loop to produce 10 partitions
-for(i in 1:4){
+for(i in 1:10){
   # Create stratified 10 folds partition (default) based on desired class and do some basic verifications
   # The caret library documentation says that this is a stratified partition
   # and this is why the fuction asks for a input class
@@ -50,7 +50,7 @@ for(i in 1:4){
   summary(data[folds[[1]],])
 
   # Create a loop to create a training and test set
-  for(j in 1:3){
+  for(j in 1:10){
     # Define the training sample excluding fold j
     training <- data[-folds[[j]],]
     nrow(training)

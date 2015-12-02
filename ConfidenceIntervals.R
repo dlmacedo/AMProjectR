@@ -8,11 +8,11 @@ rownames(confInt) <- c("MEAN","STD")
 for(m in 1:6){
   globalResults[,m]
   mg <- mean(globalResults[,m])
-  me <- qnorm(.975)*(sd(globalResults[,m])/sqrt(12))
+  me <- qnorm(.975)*(sd(globalResults[,m])/sqrt(100))
   confInt[1,m] <- mg
   confInt[2,m] <- me
   confInt
   }
 return(confInt)
 }
-confidenceInterval()
+#confidenceInterval()

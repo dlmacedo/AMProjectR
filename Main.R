@@ -1,5 +1,5 @@
 # Define output sink
-# sink("AMProjectR.out")
+sink("AMProjectR.out")
 
 # Install packages
 # Install.packages("caret", dependencies = c("Depends", "Suggests"))
@@ -98,4 +98,4 @@ friedman.test(globalResults)
 posthoc.friedman.nemenyi.test(globalResults)
 
 # Stop output sink
-# sink()
+sink()
